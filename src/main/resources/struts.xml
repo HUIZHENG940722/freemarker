@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+
+    <package name="freemarker" namespace="/" extends="struts-default">
+        <action name="createWord" class="com.example.action.WordAction" method="createWord">
+            <!--重定向-->
+            <result name="createWordSuccess" type="redirectAction">
+                <param name="actionName">downloadWord</param>
+                <param name="filePath">${filePath}</param>
+                <param name="fileOnlyName">${fileOnlyName}</param>
+                <param name="fileName">${fileName}</param>
+                <param name="encode">true</param>
+            </result>
+        </action>
+
+        <action name="downloadWord" class="com.example.action.WordAction" method="downloadWord">
+            <result name="downloadWord" type="stream">
+                <param name="contentDisposition">attachment;filename="${fileName}"</param>
+            <param name="inputName">wordFile</param>
+            <param name="encode">true</param>
+            </result>
+            <result name="error">/error.jsp</result>
+        </action>
+    </package>
+</struts>
